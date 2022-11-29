@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace _Game.Scripts.DragAndDrop {
     public class DragComponent : MonoBehaviour {
+        private readonly UpdatedValue<bool> _dragging = new UpdatedValue<bool>();
+        public IUpdatedValue<bool> Dragging => _dragging;
+
         private Drag _drag;
         private Action _stopDrag;
         private readonly RaycastHit2D[] _hits = new RaycastHit2D[5];
@@ -15,6 +18,12 @@ namespace _Game.Scripts.DragAndDrop {
 
         public DragComponent() {
             OnDrop = new Event<DragComponent, DropComponent>(out _onDrop);
+
+            Dragging.Subscribe(SetLayer);
+        }
+
+        private void SetLayer(bool dragging) {
+            transform.SetParent(!dragging ? Layers.Instance.ObjectLayer : Layers.Instance.DragLayer);
         }
 
         public void SpawnDragged(Drag drag) {
@@ -23,30 +32,20 @@ namespace _Game.Scripts.DragAndDrop {
 
         private void RegisterDrag(Drag drag) {
             _drag = drag;
+            _dragging.Value = true;
             _drag.SetPositionSetter(SetPosition);
             _drag.OnDrop.Subscribe(OnDragStop);
-        }
-
-        private void OnMouseDrag() {
-            if (_drag == null) {
-                RegisterDrag(new Drag(() => MouseWorldPoint, out _stopDrag));
-            }
-
-            _drag.ProcessFrame();
         }
 
         private void SetPosition(Vector3 worldPoint) {
             worldPoint.z = transform.position.z;
             transform.position = worldPoint;
         }
-    
-        private void OnMouseUp() {
-            _stopDrag?.Invoke();
-            _stopDrag = null;
-            _drag = null;
-        }
 
         private void OnDragStop() {
+            _drag = null;
+            _dragging.Value = false;
+
             var hitCount = Physics2D.RaycastNonAlloc(MouseWorldPoint, Vector2.zero, _hits);
             for (var i = 0; i < hitCount; i++) {
                 if (_hits[i].transform.TryGetComponent(out DropComponent drop)) {
@@ -55,6 +54,21 @@ namespace _Game.Scripts.DragAndDrop {
                     break;
                 }
             }
+        }
+
+        private void OnMouseDrag() {
+            if (_drag == null) {
+                RegisterDrag(new Drag(() => MouseWorldPoint, out _stopDrag));
+            }
+        }
+
+        private void Update() {
+            _drag?.ProcessFrame();
+        }
+    
+        private void OnMouseUp() {
+            _stopDrag?.Invoke();
+            _stopDrag = null;
         }
     }
 }
