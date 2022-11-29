@@ -9,7 +9,7 @@ namespace _Game.Scripts.Objects {
         private Action _stopDrag;
 
         private void OnMouseDown() {
-            var flower = Instantiate(_flowerPrefab, App.Instance.ObjectLayer);
+            var flower = Instantiate(_flowerPrefab, Layers.Instance.ObjectLayer);
 
             var drag = new Drag(() => DragComponent.MouseWorldPoint, out _stopDrag);
             flower.SpawnDragged(drag);

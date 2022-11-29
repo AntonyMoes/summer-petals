@@ -259,5 +259,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2091958cc8472491bf58d1f4a91c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _drag: {fileID: 595371763839477302}
+  _dragComponent: {fileID: 595371763839477302}
   _type: Cutie
