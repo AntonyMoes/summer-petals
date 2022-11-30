@@ -1,5 +1,7 @@
-﻿using GeneralUtils;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using GeneralUtils;
 using UnityEngine;
 
 namespace _Game.Scripts.DragAndDrop {
@@ -9,7 +11,7 @@ namespace _Game.Scripts.DragAndDrop {
 
         private Drag _drag;
         private Action _stopDrag;
-        private readonly RaycastHit2D[] _hits = new RaycastHit2D[5];
+        private readonly RaycastHit2D[] _hits = new RaycastHit2D[10];
 
         private readonly Action<DragComponent, DropComponent> _onDrop;
         public readonly Event<DragComponent, DropComponent> OnDrop;
@@ -46,14 +48,19 @@ namespace _Game.Scripts.DragAndDrop {
             _drag = null;
             _dragging.Value = false;
 
-            var hitCount = Physics2D.RaycastNonAlloc(MouseWorldPoint, Vector2.zero, _hits);
-            for (var i = 0; i < hitCount; i++) {
-                if (_hits[i].transform.TryGetComponent(out DropComponent drop)) {
-                    _onDrop(this, drop);
-                    drop.OnDragEnd(this);
-                    break;
-                }
+            var drop = GetDraggedOver<DropComponent>().FirstOrDefault();
+            if (drop != null) {
+                _onDrop(this, drop);
+                drop.OnDragEnd(this);
             }
+        }
+
+        public IEnumerable<T> GetDraggedOver<T>() where T : Component {
+            var hitCount = Physics2D.RaycastNonAlloc(MouseWorldPoint, Vector2.zero, _hits);
+            return _hits
+                .Take(hitCount)
+                .Where(h => h.transform.TryGetComponent<T>(out _))
+                .Select(h => h.transform.GetComponent<T>());
         }
 
         private void OnMouseDrag() {
