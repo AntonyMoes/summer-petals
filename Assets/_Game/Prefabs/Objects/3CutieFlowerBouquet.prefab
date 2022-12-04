@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2801700788631110452}
   - component: {fileID: 2801700788631110442}
   - component: {fileID: 3754770354226820093}
-  - component: {fileID: 2801700788631110443}
   - component: {fileID: 734050352}
   m_Layer: 0
   m_Name: 3CutieFlowerBouquet
@@ -71,47 +70,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &2801700788631110443
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801700788631110453}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 1.3064094}
-      - {x: -0.28919196, y: 1.2373284}
-      - {x: -0.48916054, y: 1.1073267}
-      - {x: -0.5257983, y: 0.867568}
-      - {x: -0.3990283, y: 0.7043925}
-      - {x: -0.20401865, y: 0.6426456}
-      - {x: -0.044654846, y: -0.09681827}
-      - {x: -0.24690384, y: -0.9431938}
-      - {x: 0.17749548, y: -1.0188664}
-      - {x: 0.2795416, y: -0.99396324}
-      - {x: 0.059947133, y: -0.08415145}
-      - {x: 0.2577629, y: 0.6932574}
-      - {x: 0.4625312, y: 0.74789876}
-      - {x: 0.5731417, y: 0.9216675}
-      - {x: 0.537882, y: 1.1693859}
-      - {x: 0.37700498, y: 1.2789662}
 --- !u!114 &734050352
 MonoBehaviour:
   m_ObjectHideFlags: 0

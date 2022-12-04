@@ -56,7 +56,7 @@ namespace _Game.Scripts.DragAndDrop {
             }
         }
 
-        public IEnumerable<T> GetDraggedOver<T>() where T : Component {
+        public IEnumerable<T> GetDraggedOver<T>() {
             var hitCount = Physics2D.RaycastNonAlloc(MouseWorldPoint, Vector2.zero, _hits);
             return _hits
                 .Take(hitCount)

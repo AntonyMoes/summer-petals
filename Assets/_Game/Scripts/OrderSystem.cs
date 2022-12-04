@@ -1,6 +1,6 @@
 ﻿using _Game.Scripts.Data;
-using _Game.Scripts.Objects;
 using _Game.Scripts.Objects.Appliances;
+using _Game.Scripts.Objects.Plants;
 using TMPro;
 using UnityEngine;
 
