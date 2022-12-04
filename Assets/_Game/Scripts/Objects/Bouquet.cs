@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using _Game.Scripts.Data;
+using _Game.Scripts.Objects.Tools;
 using UnityEngine;
 
 namespace _Game.Scripts.Objects {
     public class Bouquet : MonoBehaviour {
         [SerializeField] private Transform _wrappingPosition;
+        [SerializeField] private string _type;
         [SerializeField] private RecipeItem[] _recipe;
-        public IDictionary<string, int> Recipe => _recipe
-            .GroupBy(item => item.type)
-            .ToDictionary(g => g.Key, g => g.Sum(item => item.count));
 
-        private GameObject _wrapping;
-        public bool HasWrapping => _wrapping != null;
+        public string Type => _type;
+        public IDictionary<string, int> Recipe => _recipe.ToRecipe();
 
-        public void Wrap(GameObject wrapping) {
-            if (HasWrapping) {
+        public Wrapping Wrapping { get; private set; }
+
+        public void Wrap(Wrapping wrapping) {
+            if (_wrappingPosition == null) {
+                Destroy(wrapping.gameObject);
                 return;
             }
             
-            wrapping.transform.SetParent(_wrappingPosition, false);
-            _wrapping = wrapping;
-        }
+            if (Wrapping != null) {
+                Destroy(Wrapping.gameObject);
+            }
 
-        [Serializable]
-        public struct RecipeItem {
-            public string type;
-            public int count;
+            wrapping.transform.SetParent(_wrappingPosition, false);
+            Wrapping = wrapping;
         }
     }
 }

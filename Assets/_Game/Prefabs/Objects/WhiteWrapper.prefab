@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6865c266bc402ba75f18dab1c57e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wrappingPrefab: {fileID: 3114032885794851602, guid: 1e158bbb9beb15b4a92e6c2f9818cc28, type: 3}
+  _wrappingPrefab: {fileID: 2028931711850647010, guid: 1e158bbb9beb15b4a92e6c2f9818cc28, type: 3}
   _dragComponent: {fileID: 5363875824721671083}
 --- !u!61 &5363875824721671084
 BoxCollider2D:

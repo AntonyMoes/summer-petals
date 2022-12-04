@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wrappingPosition: {fileID: 2014836190701362434}
+  _type: 3cutie
   _recipe:
   - type: Cutie
     count: 3

@@ -1,0 +1,14 @@
+﻿{
+  "records": [
+    {
+      "type": "3cutie",
+      "wrapping": "white",
+      "description": "Букет с тремя миленькми цветочками в белой обертке, пожалуйста!"
+    },
+    {
+      "type": "3cutie",
+      "wrapping": null,
+      "description": "Просто три миленьких цветочка"
+    }
+  ]
+}
