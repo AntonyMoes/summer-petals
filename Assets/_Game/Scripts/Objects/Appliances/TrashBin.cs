@@ -11,7 +11,7 @@ namespace _Game.Scripts.Objects.Appliances {
         }
 
         private void OnDrop(DragComponent dragComponent, DropComponent _) {
-            if (dragComponent.gameObject.TryGetComponent(out Flower _) || dragComponent.gameObject.TryGetComponent(out Bouquet _)) {
+            if (dragComponent.gameObject.TryGetComponent(out Plant _) || dragComponent.gameObject.TryGetComponent(out Bouquet _)) {
                 Destroy(dragComponent.gameObject);
             }
         }

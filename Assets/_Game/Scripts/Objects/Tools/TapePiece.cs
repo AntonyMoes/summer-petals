@@ -30,12 +30,12 @@ namespace _Game.Scripts.Objects.Tools {
             t.rotation = rotation;
         }
 
-        public Flower[] GetCoveredFlowers() {
+        public Plant[] GetCoveredPlants() {
             var hitCount = Physics2D.BoxCastNonAlloc(Position, transform.localScale, transform.rotation.eulerAngles.z, Vector2.zero, _hits);
             return _hits
                 .Take(hitCount)
-                .Where(h => h.transform.TryGetComponent<Flower>(out _))
-                .Select(h => h.transform.GetComponent<Flower>())
+                .Where(h => h.transform.TryGetComponent<Plant>(out _))
+                .Select(h => h.transform.GetComponent<Plant>())
                 .ToArray();
         }
     }

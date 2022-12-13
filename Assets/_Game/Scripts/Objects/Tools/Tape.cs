@@ -26,11 +26,11 @@ namespace _Game.Scripts.Objects.Tools {
         }
 
         private void EndPiece() {
-            var flowers = _tapePiece.GetCoveredFlowers();
-            Debug.Log(string.Join(", ", flowers.Select(f => f.Type)));
+            var plants = _tapePiece.GetCoveredPlants();
+            Debug.Log(string.Join(", ", plants.Select(f => f.Type)));
 
-            if (flowers.All(f => f.Ready)) {
-                var bouquet = Bouquets.Instance.InstantiateBouquet(flowers);
+            if (plants.All(f => f.Ready)) {
+                var bouquet = Bouquets.Instance.InstantiateBouquet(plants);
                 if (bouquet != null) {
                     bouquet.transform.position = _tapePiece.Position;
                 }

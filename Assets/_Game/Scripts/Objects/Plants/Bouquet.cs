@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using _Game.Scripts.Data;
 using _Game.Scripts.Objects.Tools;
@@ -12,7 +12,11 @@ namespace _Game.Scripts.Objects.Plants {
         [SerializeField] private RecipeItem[] _recipe;
 
         public string Type => _type;
-        public IDictionary<string, int> Recipe => _recipe.ToRecipe();
+        public readonly Lazy<Recipe> Recipe;
+
+        public Bouquet() {
+            Recipe = new Lazy<Recipe>(() => new Recipe(_recipe));
+        }
 
         public Wrapping Wrapping { get; private set; }
 
@@ -38,5 +42,7 @@ namespace _Game.Scripts.Objects.Plants {
             var rb = GetComponent<Rigidbody2D>();
             GetComponentsInChildren<Rigidbody2D>().Where(crb => crb != rb).ForEach(Destroy);
         }
+
+        private Recipe GetRecipe() => new Recipe(_recipe);
     }
 }
