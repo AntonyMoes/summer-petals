@@ -1,26 +1,45 @@
-﻿using _Game.Scripts.Data;
+﻿using System;
+using _Game.Scripts.Data;
 using _Game.Scripts.Objects.Appliances;
 using _Game.Scripts.Objects.Plants;
 using TMPro;
 using UnityEngine;
 
 namespace _Game.Scripts {
-    public class OrderSystem : MonoBehaviour {
+    public class LevelController : MonoBehaviour {
         [SerializeField] private OrderTable _orderTable;
+        // TODO: move to levelUI
         [SerializeField] private TextMeshProUGUI _description;
         [SerializeField] private TextMeshProUGUI _result;
 
-        private Order _currentOrder;
+        private Order[] _orders;
         private int _currentOrderIndex;
+        private Action _onLevelEnd;
 
-        private void Start() {
+        public void StartLevel(Order[] orders, Action onLevelEnd) {
+            gameObject.SetActive(true);
+
+            _orders = orders;
+            _onLevelEnd = onLevelEnd;
             _result.text = "";
+            _currentOrderIndex = 0;
+
             StartNextOrder();
         }
 
+        private void EndLevel() {
+            gameObject.SetActive(false);
+
+            _onLevelEnd?.Invoke();
+        }
+
         private void StartNextOrder() {
-            _currentOrder = DataStorage.Instance.Orders[_currentOrderIndex];
-            _description.text = _currentOrder.Description;
+            if (_currentOrderIndex >= _orders.Length) {
+                EndLevel();
+                return;
+            }
+
+            _description.text = _orders[_currentOrderIndex].Description;
 
             _orderTable.OnDropBouquet.Subscribe(CompleteOrder);
         }
@@ -28,10 +47,10 @@ namespace _Game.Scripts {
         private void CompleteOrder(Bouquet bouquet) {
             _orderTable.OnDropBouquet.Unsubscribe(CompleteOrder);
 
-            _result.text = CheckBouquet(_currentOrder, bouquet) ? "Правильно!" : "НЕПРАВИЛЬНО!";
+            _result.text = CheckBouquet(_orders[_currentOrderIndex], bouquet) ? "Правильно!" : "НЕПРАВИЛЬНО!";
             Destroy(bouquet.gameObject);
 
-            _currentOrderIndex = (_currentOrderIndex + 1) % DataStorage.Instance.Orders.Length;
+            _currentOrderIndex++;
             StartNextOrder();
         }
 
